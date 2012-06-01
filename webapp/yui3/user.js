@@ -21,7 +21,7 @@ YUI.add("webmud-user", function(Y) {
                         }
                         else {
                             Y.fire("socket:call", {
-                                message: "user:retrieveUserById",
+                                message: "users:retrieveUserById",
                                 data: this.get("id"),
                                 callback: function(d) {
                                     Y.log("Username: " + d.replyData.username);

@@ -1,4 +1,5 @@
 var path = require("path"),
+    util = require('util'),
     express = require('express'),
     winston = require("winston"),
     yui3 = require("express-yui3"),
@@ -7,8 +8,7 @@ var path = require("path"),
     
     public = path.join(__dirname, "webapp/public");
 
-require("less");
-
+// Initial configuration of the Express server
 app.configure(function() {
     app.use(express.bodyParser()); // Allows us to parse HTTP Request bodies into JSON Objects
     app.use(express.cookieParser()); // Allows us to understand cookies
@@ -27,17 +27,39 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+// Set up all of the Socket.IO controllers to use
+var controllers = [
+    "users"
+].map(function(v) {
+    var controller = require("./lib/controllers/" + v);
+    winston.debug("Loaded controller " + v + ", " + util.inspect(controller));
+    return {
+        controller: controller,
+        name: v
+    };
+});
+
+// When we get a new Socket.IO connection, register all the controllers with it
 io.sockets.on("connection", function(socket) {
-    socket.on("user:retrieveUserById", function(userid, fn) {
-        console.log("Retrieved message: user:retrieveUserbyId: " + userid);
-        var userDetails = {
-            username: "sazzer",
-            email: "graham@grahamcox.co.uk"
-        };
-        fn(userDetails);
+    controllers.forEach(function(c) {
+        if (c.controller.handlers) {
+            for (var key in c.controller.handlers) {
+                var handlerId = c.name + ":" + key,
+                    handler = c.controller.handlers[key];
+                if (handler instanceof Function) {
+                    winston.debug("Registering handler for: " + handlerId);
+                    socket.on(handlerId, handler);
+                }
+                else {
+                    winston.error("Handler that wasn't a function found: " + handlerId + ", " + handler);
+                }
+            }
+        }
     });
 });
+
+// And finally start the server
 app.listen(3000, function() {
-    console.log("Server now listening on port 3000");
+    winston.debug("Server now listening on port 3000");
 });
 
