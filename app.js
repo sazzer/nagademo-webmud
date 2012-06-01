@@ -27,6 +27,16 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+io.sockets.on("connection", function(socket) {
+    socket.on("user:retrieveUserById", function(userid, fn) {
+        console.log("Retrieved message: user:retrieveUserbyId: " + userid);
+        var userDetails = {
+            username: "sazzer",
+            email: "graham@grahamcox.co.uk"
+        };
+        fn(userDetails);
+    });
+});
 app.listen(3000, function() {
     console.log("Server now listening on port 3000");
 });
