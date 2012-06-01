@@ -9,7 +9,8 @@
       "express-yui3": "latest",
       "less": "latest",
       "vows": "latest",
-      "winston": "latest"
+      "winston": "latest",
+      "mongolian": "latest"
   }
 }
 

@@ -5,6 +5,7 @@ var path = require("path"),
     yui3 = require("express-yui3"),
     app = express.createServer(),
     io = require("socket.io").listen(app),
+    datastore = require("./lib/datastore"),
     
     public = path.join(__dirname, "webapp/public");
 
@@ -38,6 +39,8 @@ var controllers = [
         name: v
     };
 });
+
+datastore.connect("mongo://localhost/webmud");
 
 // When we get a new Socket.IO connection, register all the controllers with it
 io.sockets.on("connection", function(socket) {
