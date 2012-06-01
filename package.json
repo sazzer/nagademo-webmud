@@ -9,8 +9,12 @@
       "express-yui3": "latest",
       "less": "latest",
       "vows": "latest",
+      "assert": "latest",
       "winston": "latest",
       "mongolian": "latest"
+  },
+  "scripts": {
+    "test": "vows test/* --spec"
   }
 }
 
