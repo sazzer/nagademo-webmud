@@ -13,7 +13,7 @@ vows.describe("User Management").addBatch({
     "Loading an existing user": {
         topic: function() {
             datastore.hijack("retrieveById", function(collection, id, callback) {
-                callback(null, {
+                callback(undefined, {
                     _id: "12345",
                     username: "sazzer",
                     email: "graham@grahamcox.co.uk"
@@ -37,6 +37,21 @@ vows.describe("User Management").addBatch({
         },
         "We get the correct Email address": function(err, user) {
             assert.equal(user.email, "graham@grahamcox.co.uk");
+        }
+    },
+    "Loading an unknown user": {
+        topic: function() {
+            datastore.hijack("retrieveById", function(collection, id, callback) {
+                callback(undefined, undefined);
+            });
+            users.retrieveUserById(12345, this.callback);
+            datastore.restore("retrieveById");
+        },
+        "We did get an error": function(err, user) {
+            assert.isString(err);
+        },
+        "We didn't get a user": function(err, user) {
+            assert.isUndefined(user);
         }
     }
 }).export(module);
