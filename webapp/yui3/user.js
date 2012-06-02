@@ -24,8 +24,9 @@ YUI.add("webmud-user", function(Y) {
                                 message: "users:retrieveUserById",
                                 data: this.get("id"),
                                 callback: function(d) {
-                                    Y.log("Username: " + d.replyData.username);
-                                    callback(null, d.replyData);
+                                    var user = d.replyData.user;
+                                    Y.log("Username: " + user.username);
+                                    callback(null, user);
                                 }
                             });
                         }
