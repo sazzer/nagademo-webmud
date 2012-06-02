@@ -1,17 +1,20 @@
 {
-    "name": "WebMud",
-    "description": "HTML5 WebSockets based MUD",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
+  "name": "WebMud",
+  "description": "HTML5 WebSockets based MUD",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
       "express": "latest",
       "socket.io": "latest",
       "express-yui3": "latest",
       "less": "latest",
-      "vows": "latest",
-      "assert": "latest",
       "winston": "latest",
       "mongolian": "latest"
+  },
+  "devDependencies": {
+      "vows": "latest",
+      "assert": "latest",
+      "horaa": "latest"
   },
   "scripts": {
     "test": "vows test/* --spec"
