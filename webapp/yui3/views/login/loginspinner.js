@@ -1,6 +1,6 @@
 YUI.add("webmud-views-loginspinner", function(Y) {
     /**
-     * Widget that simply shows a spinner */
+     * Widget that simply shows a spinner
      */
     Y.namespace("WebMud.Views.Login").LoginSpinner = Y.Base.create(
         "loginSpinner",
