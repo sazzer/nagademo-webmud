@@ -10,6 +10,46 @@ var vows = require("vows"),
 var datastore = horaa("../../../lib/datastore");
 
 vows.describe("User Management").addBatch({
+    "Compare passwords": {
+        topic: function() {
+            var user = new users.User();
+            user.setPassword("password");
+            return user;
+        },
+        "Hashed passwords compare correctly": function(user) {
+            assert.isTrue(user.comparePassword("password"));
+        },
+        "Comparing with hashed password fails": function(user) {
+            assert.isFalse(user.comparePassword(user.hashedPassword));
+        },
+        "Password actually gets hashed": function(user) {
+            assert.notEqual("password", user.hashedPassword);
+        }
+    },
+    "USER.toJson": {
+        topic: function() {
+            var user = new users.User();
+            user.setPassword("password");
+            return user;
+        },
+        "JSON contains expected fields": function(user) {
+            assert.include(Object.keys(user), "userid");
+            assert.include(Object.keys(user), "username");
+            assert.include(Object.keys(user), "email");
+            assert.include(Object.keys(user), "hashedPassword");
+            assert.include(Object.keys(user), "registered");
+            assert.include(Object.keys(user), "updated");
+            assert.include(Object.keys(user), "active");
+            assert.equal(7, Object.keys(user).length);
+        },
+        "JSON doesn't contain any functions": function(user) {
+            var user = new users.User();
+            var json = user.toJson();
+            for (var key in json) {
+                assert.isFalse(json[key] instanceof Function);
+            }
+        }
+    },
     "Loading an existing user": {
         topic: function() {
             var usersCollection = {
