@@ -20,13 +20,20 @@ YUI.add("webmud-user", function(Y) {
                             callback("No UserID specified");
                         }
                         else {
+                            var userid = this.get("id");
+                            Y.log("User id: " + userid);
                             Y.fire("socket:call", {
                                 message: "users:retrieveUserById",
-                                data: this.get("id"),
+                                data: userid,
                                 callback: function(d) {
                                     var user = d.replyData.user;
-                                    Y.log("Username: " + user.username);
-                                    callback(null, user);
+                                    if (user) {
+                                        Y.log("Username: " + user.username);
+                                        callback(null, user);
+                                    }
+                                    else {
+                                        callback("Unknown user");
+                                    }
                                 }
                             });
                         }
@@ -34,6 +41,18 @@ YUI.add("webmud-user", function(Y) {
                     default:
                         callback("Unsupported operation: " + action);
                         break;
+                }
+            },
+            /**
+             * Determine if the user is New or not. A User is New if it has no ID
+             */
+            isNew: function() {
+                var userid = this.get("id");
+                if (userid) {
+                    return false;
+                }
+                else {
+                    return true;
                 }
             }
         }, {
@@ -45,7 +64,14 @@ YUI.add("webmud-user", function(Y) {
                  */
                 id: {
                     valueFn: function() {
-                        return Y.StorageLite.getItem("userid");
+                        var userid = Y.StorageLite.getItem("userid");
+                        Y.log("User ID is now: " + userid);
+                        return userid;
+                    },
+                    setter: function(val) {
+                        Y.log("Setting User ID to: " + val);
+                        Y.StorageLite.setItem("userid", val);
+                        return val;
                     }
                 },
                 /**

@@ -19,10 +19,34 @@ YUI.add("webmud-app", function(Y) {
              * Ensure that the correct initial view is displayed
              */
             initializer: function() {
-                this.once("ready", function(e) {
-                    Y.log("Showing view: login");
-                    this.showView("login");
-                });
+                this.once("ready", this._onReady, this);
+                this.get("user").after("load", this._afterUserLoaded, this);
+            },
+            /**
+             * Event handler for when the app is ready to start
+             */
+            _onReady: function() {
+                var user = this.get("user");
+                user.load(Y.bind(function(err) {
+                    if (err) {
+                        Y.log(err);
+                        this.showView("login", {}, Y.bind(function(v) {
+                            v.after("loggedin", function(e) {
+                                var userid = e.user.userid;
+                                Y.log("User logged in. Storing user id: " + userid);
+                                user.set("id", userid);
+                                user.load();
+                            });
+                        }, this));
+                    }
+                }, this));
+            },
+            /**
+             * Handler for when the user is successfully loaded
+             */
+            _afterUserLoaded: function() {
+                var user = this.get("user");
+                Y.log("User loaded: " + user.get("username"));
             }
         }, {
             ATTRS: {
