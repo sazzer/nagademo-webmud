@@ -30,6 +30,10 @@ app.configure('development', function(){
 
 app.configure('production', function(){
   app.use(express.errorHandler());
+
+  // Configure logging
+  winston.remove(winston.transports.Console);
+  winston.add(winston.transports.Console, { level: "warning" });
 });
 
 // Set up all of the Socket.IO controllers to use
