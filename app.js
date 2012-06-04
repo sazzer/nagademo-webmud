@@ -7,10 +7,14 @@ var path = require("path"),
     io = require("socket.io").listen(app),
     datastore = require("./lib/datastore"),
     
-    public = path.join(__dirname, "webapp/public");
+    public = path.join(__dirname, "webapp/public"),
+
+    port = process.env.PORT || 3000,
+    mongoCredentials = process.env.MONGO || "mongo://localhost/webmud";
 
 // Initial configuration of the Express server
 app.configure(function() {
+    app.use(express.logger());
     app.use(express.bodyParser()); // Allows us to parse HTTP Request bodies into JSON Objects
     app.use(express.cookieParser()); // Allows us to understand cookies
     app.use(express.session({secret: "0785ea65-ece7-4735-bf8c-1c131d78aa6c"})); // Allows us to use sessions
@@ -40,7 +44,7 @@ var controllers = [
     };
 });
 
-datastore.connect("mongo://localhost/webmud");
+datastore.connect(mongoCredentials);
 
 // When we get a new Socket.IO connection, register all the controllers with it
 io.sockets.on("connection", function(socket) {
@@ -62,7 +66,7 @@ io.sockets.on("connection", function(socket) {
 });
 
 // And finally start the server
-app.listen(3000, function() {
-    winston.debug("Server now listening on port 3000");
+app.listen(port, function() {
+    winston.debug("Server now listening on port " + port);
 });
 
