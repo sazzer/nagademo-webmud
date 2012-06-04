@@ -1,4 +1,69 @@
-@color: #4D926F;
-h1 {
-    color:@color;
+@headerSize: 5em;
+@footerSize: 2em;
+
+body {
+    #header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: @headerSize;
+        background-color: #4060a0;
+
+        #logo {
+            color: #fff;
+            margin: 1em;
+            padding: 0;
+        }
+    }
+
+    #body {
+        position: absolute;
+        top: @headerSize;
+        left: 0;
+        right: 0;
+        bottom: @footerSize;
+
+        .loginView {
+            border: 1px solid black;
+            padding: 1em;
+            display: inline-block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 220px;
+            margin-right: 5em;
+            margin-top: 5em;
+
+            label {
+                display: inline-block;
+
+                input {
+                    width: 98%;
+                }
+            }
+            .yui3-loginpanel-hidden,
+            .yui3-registerpanel-hidden,
+            .yui3-passwordpanel-hidden,
+            .yui3-loginspinner-hidden {
+                display: none;
+            }
+
+            .yui3-loginspinner .spinner {
+            }
+        }
+    }
+
+    #footer {
+        position: absolute;
+        height: @footerSize;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000;
+    }
+
+    .error {
+        color: #f00;
+    }
 }

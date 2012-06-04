@@ -12,15 +12,20 @@ var datastore = horaa("../../../lib/datastore");
 vows.describe("User Management").addBatch({
     "Loading an existing user": {
         topic: function() {
-            datastore.hijack("retrieveById", function(collection, id, callback) {
-                callback(undefined, {
-                    _id: "12345",
-                    username: "sazzer",
-                    email: "graham@grahamcox.co.uk"
-                });
+            var usersCollection = {
+                findOne: function(query, callback) {
+                    callback(undefined, {
+                        _id: 12345,
+                        username: "sazzer",
+                        email: "graham@grahamcox.co.uk"
+                    });
+                }
+            };
+            datastore.hijack("getCollection", function(collection) {
+                return usersCollection;
             });
             users.retrieveUserById(12345, this.callback);
-            datastore.restore("retrieveById");
+            datastore.restore("getCollection");
         },
         "We didn't get an error": function(err, user) {
             assert.isNull(err);
@@ -41,17 +46,22 @@ vows.describe("User Management").addBatch({
     },
     "Loading an unknown user": {
         topic: function() {
-            datastore.hijack("retrieveById", function(collection, id, callback) {
-                callback(undefined, undefined);
+            var usersCollection = {
+                findOne: function(query, callback) {
+                    callback(undefined, undefined);
+                }
+            };
+            datastore.hijack("getCollection", function(collection) {
+                return usersCollection;
             });
             users.retrieveUserById(12345, this.callback);
-            datastore.restore("retrieveById");
+            datastore.restore("getCollection");
         },
-        "We did get an error": function(err, user) {
-            assert.isString(err);
+        "We didn't get an error": function(err, user) {
+            assert.isNull(err);
         },
         "We didn't get a user": function(err, user) {
-            assert.isUndefined(user);
+            assert.isNull(user);
         }
     }
 }).export(module);

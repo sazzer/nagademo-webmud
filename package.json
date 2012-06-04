@@ -9,7 +9,9 @@
       "express-yui3": "latest",
       "less": "latest",
       "winston": "latest",
-      "mongolian": "latest"
+      "async": "latest",
+      "mongolian": "latest",
+      "mhash": "latest"
   },
   "devDependencies": {
       "vows": "latest",
