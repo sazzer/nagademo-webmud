@@ -15,7 +15,7 @@ vows.describe("User Management").addBatch({
             var usersCollection = {
                 findOne: function(query, callback) {
                     callback(undefined, {
-                        _id: 12345,
+                        _id: "4fccfca50000000111000003",
                         username: "sazzer",
                         email: "graham@grahamcox.co.uk"
                     });
@@ -24,7 +24,7 @@ vows.describe("User Management").addBatch({
             datastore.hijack("getCollection", function(collection) {
                 return usersCollection;
             });
-            users.retrieveUserById(12345, this.callback);
+            users.retrieveUserById("4fccfca50000000111000003", this.callback);
             datastore.restore("getCollection");
         },
         "We didn't get an error": function(err, user) {
@@ -35,7 +35,7 @@ vows.describe("User Management").addBatch({
             assert.instanceOf(user, users.User);
         },
         "We get the correct User ID": function(err, user) {
-            assert.equal(user.userid, 12345);
+            assert.equal(user.userid, "4fccfca50000000111000003");
         },
         "We get the correct Username": function(err, user) {
             assert.equal(user.username, "sazzer");
@@ -54,7 +54,7 @@ vows.describe("User Management").addBatch({
             datastore.hijack("getCollection", function(collection) {
                 return usersCollection;
             });
-            users.retrieveUserById(12345, this.callback);
+            users.retrieveUserById("4fccfca50000000111000003", this.callback);
             datastore.restore("getCollection");
         },
         "We didn't get an error": function(err, user) {
