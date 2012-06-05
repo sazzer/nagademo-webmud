@@ -13,6 +13,9 @@ YUI.add("webmud-app", function(Y) {
             views: {
                 "login": {
                     type: Y.WebMud.Views.LoginView
+                },
+                "characters": {
+                    type: Y.WebMud.Views.CharactersView
                 }
             },
             /**
@@ -56,8 +59,13 @@ YUI.add("webmud-app", function(Y) {
              * Handler for when the user is successfully loaded
              */
             _afterUserLoaded: function() {
-                var user = this.get("user");
-                Y.log("User loaded: " + user.get("username"));
+                var user = this.get("user"),
+                    characters = this.get("characters");
+
+                characters.set("user", user);
+                characters.load(Y.bind(function(err, response) {
+                    this.showView("characters", {characters: characters});
+                }, this));
             }
         }, {
             ATTRS: {
@@ -67,6 +75,9 @@ YUI.add("webmud-app", function(Y) {
                 user: {
                     value: new Y.WebMud.User()
                 },
+                characters: {
+                    value: new Y.WebMud.CharacterList()
+                },
                 currentUserArea: {}
             }
         });
@@ -75,7 +86,9 @@ YUI.add("webmud-app", function(Y) {
         "app",
         "webmud-socketio",
         "webmud-user",
+        "webmud-character-list",
         "webmud-views-login",
+        "webmud-views-characters",
         "webmud-views-currentuser"
     ]
 });

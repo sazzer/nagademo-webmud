@@ -38,7 +38,8 @@ app.configure('production', function(){
 
 // Set up all of the Socket.IO controllers to use
 var controllers = [
-    "users"
+    "users",
+    "characters"
 ].map(function(v) {
     var controller = require("./lib/controllers/" + v);
     winston.debug("Loaded controller " + v + ", " + util.inspect(controller));

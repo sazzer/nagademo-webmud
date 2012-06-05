@@ -16,10 +16,11 @@
   "devDependencies": {
       "vows": "latest",
       "assert": "latest",
-      "horaa": "latest"
+      "horaa": "latest",
+      "yui": "3.5.1"
   },
   "scripts": {
-    "test": "vows test/* --spec"
+    "test": "vows `find test -name 'test*.js'` --spec"
   }
 }
 
