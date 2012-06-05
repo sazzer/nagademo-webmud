@@ -19,8 +19,13 @@ YUI.add("webmud-app", function(Y) {
              * Ensure that the correct initial view is displayed
              */
             initializer: function() {
+                var user = this.get("user");
+
                 this.once("ready", this._onReady, this);
-                this.get("user").after("load", this._afterUserLoaded, this);
+                user.after("load", this._afterUserLoaded, this);
+                user.after("destroy", function() {
+                    location.reload(true);
+                });
             },
             /**
              * Event handler for when the app is ready to start
@@ -40,6 +45,12 @@ YUI.add("webmud-app", function(Y) {
                         }, this));
                     }
                 }, this));
+
+                var currentUser = new Y.WebMud.Views.CurrentUser({
+                    user: user,
+                    render: "#header"
+                }).hide();
+                this.set("currentUserArea", currentUser);
             },
             /**
              * Handler for when the user is successfully loaded
@@ -55,7 +66,8 @@ YUI.add("webmud-app", function(Y) {
                 },
                 user: {
                     value: new Y.WebMud.User()
-                }
+                },
+                currentUserArea: {}
             }
         });
 }, "0.0.1", {
@@ -63,6 +75,7 @@ YUI.add("webmud-app", function(Y) {
         "app",
         "webmud-socketio",
         "webmud-user",
-        "webmud-views-login"
+        "webmud-views-login",
+        "webmud-views-currentuser"
     ]
 });

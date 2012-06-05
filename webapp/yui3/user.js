@@ -8,6 +8,18 @@ YUI.add("webmud-user", function(Y) {
         [],
         {
             /**
+             * Hook up the listener so that when the User object is destroyed the user is forgotten
+             */
+            initializer: function() {
+                this.on("destroy", this._forgetUser, this);
+            },
+            /**
+             * Forget the user, so that next time round the user needs to log in again
+             */
+            _forgetUser: function() {
+                Y.StorageLite.removeItem("userid");
+            },
+            /**
              * Custom Sync function to retrieve the User from the mud server.
              * The User is retrieved by firing an event that will be processed by
              * the Socket.IO handler to retrieve the User by it's ID, under the assumption
@@ -65,10 +77,17 @@ YUI.add("webmud-user", function(Y) {
                 id: {
                     valueFn: function() {
                         var userid = Y.StorageLite.getItem("userid");
+                        if (userid === "undefined") {
+                            userid = undefined;
+                            Y.StorageLite.removeItem("userid");
+                        }
                         Y.log("User ID is now: " + userid);
                         return userid;
                     },
                     setter: function(val) {
+                        if (val === "undefined") {
+                            val = undefined;
+                        }
                         Y.log("Setting User ID to: " + val);
                         Y.StorageLite.setItem("userid", val);
                         return val;
