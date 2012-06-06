@@ -1,8 +1,8 @@
-define([], function() {
+define(["utils"], function(utils) {
     /**
      * Widget Mixin
      */
-    var Widget = {
+    var Widget = utils.Class({
         /**
          * Ensure the panel is visible
          */
@@ -52,7 +52,7 @@ define([], function() {
          * Synchronize any initial state of the widget
          */
         _syncUi: function() {}
-    }
+     }, { }, [ ]);
 
     return Widget;
 });

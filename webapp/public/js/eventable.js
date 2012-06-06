@@ -1,8 +1,8 @@
-define(["radio"], function(radio) {
+define(["utils", "radio"], function(utils, radio) {
     /**
      * Eventable Mixin
      */
-    var Eventable = {
+    var Eventable = utils.Class({
         /**
          * Register a new listener on the event
          * @param name the name of the event
@@ -43,7 +43,7 @@ define(["radio"], function(radio) {
             }
             return this._EVENTS[name];
         }
-    }
+    }, { }, []);
 
     return Eventable;
 });

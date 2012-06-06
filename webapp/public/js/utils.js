@@ -5,9 +5,30 @@ define([], function() {
      * @param source The object to mix from
      */
     function mix(destination, source) {
-        for (var k in source) {
-            if (source.hasOwnProperty(k) && !destination.hasOwnProperty(k)) {
-                destination[k] = source[k];
+        if ($.isFunction(source)) {
+            // Mixing in another class
+            // destination must be a class here
+            for (var k in source.prototype) {
+                if (source.prototype.hasOwnProperty(k) && !destination.prototype.hasOwnProperty(k)) {
+                    destination.prototype[k] = source.prototype[k];
+                }
+            }
+            for (var k in source.prototype.constructor) {
+                if (source.prototype.constructor.hasOwnProperty(k) && !destination.prototype.constructor.hasOwnProperty(k)) {
+                    destination.prototype.constructor[k] = source.prototyp.constructore[k];
+                }
+            }
+        }
+        else if ($.isPlainObject(source)) {
+            // Mixing in a simple object
+            var target = destination;
+            if ($.isFunction(target)) {
+                target = target.prototype;
+            }
+            for (var k in source) {
+                if (source.hasOwnProperty(k) && !target.hasOwnProperty(k)) {
+                    target[k] = source[k];
+                }
             }
         }
         return destination;
@@ -35,7 +56,7 @@ define([], function() {
         }
         if (bases) {
             $.each(bases, function(i, v) {
-                mix(result.prototype, v);
+                mix(result, v);
             });
         }
         return result;
