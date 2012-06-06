@@ -6,7 +6,6 @@
   "dependencies": {
       "express": "latest",
       "socket.io": "latest",
-      "express-yui3": "latest",
       "less": "latest",
       "winston": "latest",
       "async": "latest",

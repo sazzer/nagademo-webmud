@@ -1,0 +1,3 @@
+define(["user"], function(user) {
+    
+});
