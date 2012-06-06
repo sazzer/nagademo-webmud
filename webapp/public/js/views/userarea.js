@@ -14,9 +14,9 @@ define(["user"], function(user) {
             _currentUserArea.hide();
             $(container).append(_currentUserArea);
 
-            user.events.loaded.subscribe(function(user) {
-                if (user) {
-                    _currentUserArea.find(".username").text(user.username);
+            user.events.loaded.subscribe(function(loadeduser) {
+                if (loadeduser) {
+                    _currentUserArea.find(".username").text(loadeduser.username);
                     _currentUserArea.show();
                 }
                 else {

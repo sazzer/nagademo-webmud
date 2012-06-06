@@ -38,7 +38,9 @@ define(["localstorage", "socket", "radio"], function(localstorage, socket, radio
             var userid = localstorage.get("userid");
             if (userid) {
                 _userSocket.call("retrieveUserById", userid, function(reply) {
-                    _currentUser = new User(reply.replyData.user);
+                    if (reply.replyData.user) {
+                        _currentUser = new User(reply.replyData.user);
+                    }
                     _userLoadedEvent.broadcast(_currentUser);
                     callback(reply.replyData.error, _currentUser);
                 });
