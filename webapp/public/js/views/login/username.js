@@ -1,21 +1,12 @@
 define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
     /**
-     * View that represents the login area
-     * @param container The container to render into
+     * Class representing the panel to enter a username into
      */
-    function UsernamePanel(container) {
-        this.container = $(container);
-        this.render(this.container);
-    }
-
-    UsernamePanel.prototype = {
-        _TEMPLATE: [
-            '<label>Username: <input class="username" type="text" /></label>',
-            '<div>',
-                '<button class="signin">Sign In</button>',
-            '</div>',
-        ].join(""),
- 
+    var UsernamePanel = utils.Class({
+        initializer: function(container) {
+            this.container = container;
+            this.render(container);
+        },
         /**
          * Render the Login view
          */
@@ -31,9 +22,17 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
                 username: username
             });
         }
-    }
-    utils.mix(UsernamePanel.prototype, Widget);
-    utils.mix(UsernamePanel.prototype, Eventable);
+     }, {
+        _TEMPLATE: [
+            '<label>Username: <input class="username" type="text" /></label>',
+            '<div>',
+                '<button class="signin">Sign In</button>',
+            '</div>',
+        ].join("")
+     }, [
+        Widget,
+        Eventable
+    ]);
 
     return UsernamePanel;
 });

@@ -1,25 +1,17 @@
 define(["user", "views/login/username", "widget", "utils"], function(user, UsernamePanel, Widget, utils) {
-
     /**
-     * View that represents the login area
-     * @param container The container to render into
+     * Class representing the view to login or register in
      */
-    function LoginView(container) {
-        this.container = container;
-        this.panels = {
-            usernamePanel: undefined,
-            registerPanel: undefined,
-            passwordPanel: undefined,
-            spinnerPanel: undefined
-        }
-
-        this.render(this.container);
-    }
-
-    LoginView.prototype = {
-        _TEMPLATE: "<div class='loginView'></div>",
-        _HTML_PARSER: {
-            _loginArea: ".loginView"
+    var LoginView = utils.Class({
+        initializer: function(container) {
+            this.container = container;
+            this.panels = {
+                usernamePanel: undefined,
+                registerPanel: undefined,
+                passwordPanel: undefined,
+                spinnerPanel: undefined
+            }
+            this.render(container);
         },
         /**
          * Render the Login view
@@ -48,8 +40,14 @@ define(["user", "views/login/username", "widget", "utils"], function(user, Usern
                 }
             });
         }
-    }
-    utils.mix(LoginView.prototype, Widget);
+    }, {
+        _TEMPLATE: "<div class='loginView'></div>",
+        _HTML_PARSER: {
+            _loginArea: ".loginView"
+        }
+    }, [
+        Widget
+    ]);
 
     return LoginView;
 });

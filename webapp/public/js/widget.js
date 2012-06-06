@@ -21,13 +21,13 @@ define([], function() {
         render: function(container) {
             this._container = $(container);
 
-            var template = Object.getPrototypeOf(this)._TEMPLATE;
+            var template = Object.getPrototypeOf(this).constructor._TEMPLATE;
             if (template) {
                 var node = $(template);
                 this._container.append(node);
             }
 
-            var parser = Object.getPrototypeOf(this)._HTML_PARSER;
+            var parser = Object.getPrototypeOf(this).constructor._HTML_PARSER;
             if (parser) {
                 $.each(parser, $.proxy(function(i, v) {
                     this[i] = this._container.find(v);
