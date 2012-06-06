@@ -1,4 +1,4 @@
-define(["localstorage", "socket"], function(localstorage, socket) {
+define(["localstorage", "socket", "radio"], function(localstorage, socket, radio) {
     /**
      * Definition of the User class
      */
@@ -14,7 +14,15 @@ define(["localstorage", "socket"], function(localstorage, socket) {
      */
     var _currentUser = undefined;
 
+    /**
+     * The Socket connection to load user data with
+     */
     var _userSocket = new socket.Socket("users");
+
+    /**
+     * The User Loaded event
+     */
+    var _userLoadedEvent = radio("users/loaded");
 
     /**
      * Load the user that is currently saved in the session
@@ -23,16 +31,20 @@ define(["localstorage", "socket"], function(localstorage, socket) {
      */
     function load(callback) {
         if (_currentUser) {
+            _userLoadedEvent.broadcast(_currentUser);
             callback(null, _currentUser);
         }
         else {
             var userid = localstorage.get("userid");
             if (userid) {
                 _userSocket.call("retrieveUserById", userid, function(reply) {
-                    callback(reply.replyData.error, new User(reply.replyData.user));
+                    _currentUser = new User(reply.replyData.user);
+                    _userLoadedEvent.broadcast(_currentUser);
+                    callback(reply.replyData.error, _currentUser);
                 });
             }
             else {
+                _userLoadedEvent.broadcast(undefined);
                 callback("No UserID found");
             }
         }
@@ -40,6 +52,9 @@ define(["localstorage", "socket"], function(localstorage, socket) {
 
     return {
         User: User,
-        load: load
+        load: load,
+        events: {
+            loaded: _userLoadedEvent
+        }
     };
 });

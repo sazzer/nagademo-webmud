@@ -1,5 +1,6 @@
-require(["user", "views/login/login"], function(user, loginView) {
+require(["user", "views/login/login", "views/userarea"], function(user, loginView, userArea) {
+    userArea.initialize("#header");
+
     user.load(function(err, user) {
-        alert(user.username);
     });
 });
