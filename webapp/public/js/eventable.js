@@ -8,8 +8,9 @@ define(["utils", "radio"], function(utils, radio) {
          * @param name the name of the event
          * @param callback The listener callback
          */
-        on: function(name, callback) {
-            this._getEvent(name).subscribe(callback);
+        on: function(name, callback, context) {
+            context = context || this;
+            this._getEvent(name).subscribe(callback.bind(context));
             return this;
         },
         /**

@@ -7,30 +7,31 @@ define(["utils"], function(utils) {
          * Ensure the panel is visible
          */
         show: function() {
-            this.container.show();
+            this._contentBox.show();
         },
         /**
          * Ensure the panel is hidden
          */
         hide: function() {
-            this.container.hide();
+            this._contentBox.hide();
         },
         /**
          * Render the widget into the container
          */
         render: function(container) {
             this._container = $(container);
+            this._contentBox = $("<div />").appendTo(this._container);
 
             var template = Object.getPrototypeOf(this).constructor._TEMPLATE;
             if (template) {
                 var node = $(template);
-                this._container.append(node);
+                this._contentBox.append(node);
             }
 
             var parser = Object.getPrototypeOf(this).constructor._HTML_PARSER;
             if (parser) {
                 $.each(parser, $.proxy(function(i, v) {
-                    this[i] = this._container.find(v);
+                    this[i] = this._contentBox.find(v);
                 }, this));
             }
 

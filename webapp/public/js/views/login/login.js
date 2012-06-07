@@ -1,4 +1,4 @@
-define(["user", "views/login/username", "widget", "utils"], function(user, UsernamePanel, Widget, utils) {
+define(["user", "views/login/username", "views/login/spinner", "widget", "utils"], function(user, UsernamePanel, LoginSpinner, Widget, utils) {
     /**
      * Class representing the view to login or register in
      */
@@ -18,12 +18,13 @@ define(["user", "views/login/username", "widget", "utils"], function(user, Usern
          */
         _renderUi: function() {
             this.panels.usernamePanel = new UsernamePanel(this._loginArea);
+            this.panels.spinnerPanel = new LoginSpinner(this._loginArea);
             this._showOne("usernamePanel");
         },
         _bindUi: function() {
             this.panels.usernamePanel.on("signin", function(e) {
-                alert("Username: " + e.username);
-            });
+                this._showOne("spinnerPanel");
+            }, this);
         },
         /**
          * Ensure that exactly the names sub-panel is displayed
