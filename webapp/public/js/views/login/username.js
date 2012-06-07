@@ -4,17 +4,16 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
      */
     var UsernamePanel = utils.Class({
         initializer: function(container) {
-            this.container = container;
             this.render(container);
         },
         /**
          * Render the Login view
          */
         _bindUi: function() {
-            this.container.find(".signin").on("click", $.proxy(this._onSigninClick, this));
+            this.getContentBox().find(".signin").on("click", $.proxy(this._onSigninClick, this));
         },
         _onSigninClick: function() {
-            var container = this.container,
+            var container = this.getContentBox(),
                 usernameBox = container.find(".username"),
                 username = usernameBox.val();
 

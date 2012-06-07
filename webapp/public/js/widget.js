@@ -39,6 +39,12 @@ define(["utils"], function(utils) {
             this._bindUi();
             this._syncUi();
         }, 
+        /**
+         * Get the content box of the widget
+         */
+        getContentBox: function() {
+            return this._contentBox;
+        },
 
         /**
          * Actually render the contents of the widget into the container
