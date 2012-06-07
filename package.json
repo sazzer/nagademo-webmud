@@ -10,7 +10,8 @@
       "winston": "latest",
       "async": "latest",
       "mongolian": "latest",
-      "mhash": "latest"
+      "mhash": "latest",
+      "requirejs": "latest"
   },
   "devDependencies": {
       "vows": "latest",
