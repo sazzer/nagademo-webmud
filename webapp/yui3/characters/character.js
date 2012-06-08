@@ -30,8 +30,7 @@ YUI.add("webmud-character", function(Y) {
 }, "0.0.1", {
     requires: [
         "model",
-        "dump",
-        "webmud-character-stats"
+        "dump"
     ]
 });
 

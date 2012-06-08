@@ -16,6 +16,12 @@ YUI.add("webmud-views-characters", function(Y) {
              */
             render: function() {
                 var container = this.get("container");
+                Y.fire("socket:call", {
+                    message: "templates:getAllTemplates",
+                    callback: function(d) {
+                        Y.log(Y.dump(d));
+                    }
+                });
             },
         }, {
             ATTRS: {
