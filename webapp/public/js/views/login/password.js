@@ -1,8 +1,8 @@
 define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
     /**
-     * Class representing the panel to enter registration details into
+     * Class representing the panel to enter the password into
      */
-    var RegisterPanel = utils.Class({
+    var PasswordPanel = utils.Class({
         initializer: function(container) {
             this.render(container);
         },
@@ -12,10 +12,6 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
         _bindUi: function() {
             this.getContentBox().find(".signin").on("click", this._onSigninClick.bind(this));
             this.getContentBox().find(".cancel").on("click", this._onCancelClick.bind(this));
-            this.getContentBox().find(".username").on("change", this._onUsernameChange.bind(this));
-            this.getContentBox().find(".username").on("change", this._onUsernameChange.bind(this));
-            this.getContentBox().find(".username").on("change", this._onUsernameChange.bind(this));
-            this.getContentBox().find(".username").on("change", this._onUsernameChange.bind(this));
         },
         setUsername: function(username) {
             this.getContentBox().find(".username").val(username);
@@ -26,18 +22,10 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
         _onSigninClick: function() {
             var container = this.getContentBox(),
                 usernameBox = container.find(".username"),
-                emailBox = container.find(".email"),
-                passwordBox = container.find(".password"),
-
-                username = usernameBox.val(),
-                email = emailBox.val(),
-                passwordBox.val();
-
+                username = usernameBox.val();
 
             this.fire("signin", {
-                username: usernameBox.val(),
-                email: emailBox.val(),
-                password: passwordBox.val(),
+                username: username
             });
         }
      }, {
@@ -46,20 +34,12 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
                 'Username: <input class="username" type="text" disabled="disabled" />',
                 '<div class="error"></div>',
             '</label>',
-            '<label rel="email">',
-                'Email Address: <input class="email" type="text" />',
-                '<div class="error"></div>',
-            '</label>',
             '<label rel="password">',
                 'Password: <input class="password" type="password" />',
                 '<div class="error"></div>',
             '</label>',
-            '<label rel="password2">',
-                'Re-enter Password: <input class="password2" type="password" />',
-                '<div class="error"></div>',
-            '</label>',
             '<div>',
-                '<button class="register">Register</button>',
+                '<button class="signin">Login</button>',
                 '<button class="cancel">Cancel</button>',
             '</div>',
         ].join("")
@@ -68,7 +48,8 @@ define(["widget", "utils", "eventable"], function(Widget, utils, Eventable) {
         Eventable
     ]);
 
-    return RegisterPanel;
+    return PasswordPanel;
 });
+
 
 

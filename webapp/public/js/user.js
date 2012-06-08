@@ -52,9 +52,21 @@ define(["localstorage", "socket", "radio"], function(localstorage, socket, radio
         }
     }
 
+    /**
+     * Get the Login Action that should be performed for the given username
+     * @param username The username to resolve
+     * @param callback Callback to call with the result
+     */
+    function getUserLoginAction(username, callback) {
+        _userSocket.call("getSigninAction", username, function(reply) {
+            callback(reply.replyData.signinAction);
+        });
+    }
+
     return {
         User: User,
         load: load,
+        getUserLoginAction: getUserLoginAction,
         events: {
             loaded: _userLoadedEvent
         }
