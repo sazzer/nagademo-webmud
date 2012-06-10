@@ -16,6 +16,7 @@ YUI.add("webmud-socketio", function(Y) {
             initializer: function() {
                 this._socket = io.connect();
                 Y.publish("socket:call", {
+                    emitFacade: true,
                     broadcast: 2 // 2 means to broadcast globally
                     });
                 Y.on("socket:call", this._call, this);
@@ -29,11 +30,12 @@ YUI.add("webmud-socketio", function(Y) {
             _call: function(e) {
                 var data = e.data,
                     id = e.message,
-                    callback = e.callback;
+                    callback = e.callback,
+                    context = e.context;
 
                 Y.log("Sending request with ID: " + id, "debug", "socket");
                 this._socket.emit(id, data, function(reply) {
-                    callback({
+                    callback.call(context, {
                         message: id,
                         sentData: data,
                         replyData: reply

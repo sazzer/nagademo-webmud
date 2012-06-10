@@ -16,6 +16,9 @@ YUI.add("webmud-app", function(Y) {
                 },
                 "characters": {
                     type: Y.WebMud.Views.CharactersView
+                },
+                "newCharacter": {
+                    type: Y.WebMud.Views.NewCharacterView
                 }
             },
             /**
@@ -64,7 +67,12 @@ YUI.add("webmud-app", function(Y) {
 
                 characters.set("user", user);
                 characters.load(Y.bind(function(err, response) {
-                    this.showView("characters", {characters: characters});
+                    if (characters.isEmpty()) {
+                        this.showView("newCharacter");
+                    }
+                    else {
+                        this.showView("characters", {characters: characters});
+                    }
                 }, this));
             }
         }, {
@@ -89,6 +97,7 @@ YUI.add("webmud-app", function(Y) {
         "webmud-character-list",
         "webmud-views-login",
         "webmud-views-characters",
+        "webmud-views-newcharacter",
         "webmud-views-currentuser"
     ]
 });

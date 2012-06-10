@@ -1,0 +1,19 @@
+{"name": "Reason", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+{"name": "Presence", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+{"name": "Spirit", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+{"name": "Body", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+{"name": "Muscle", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+{"name": "Finesse", "type": "Stat", "minRank": 1, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }}
+
+{"name": "Fighting", "type": "Skill", "minRank": 0, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "synergies": [{"template": "Finesse", "multiplier": 0.1}]}
+{"name": "Melee", "type": "Skill", "minRank": 0, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "inherits": "Fighting"}
+{"name": "Swords", "type": "Skill", "minRank": 0, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "inherits": "Swords"}
+{"name": "Short Sword", "type": "Skill", "minRank": 0, "maxRank": 50, "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "inherits": "Short Sword"}
+
+{"name": "Werewolf", "type": "Race", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
+{"name": "Vampire", "type": "Race", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
+{"name": "Half-Daemon", "type": "Race", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
+
+{"name": "Spellcasting", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
+{"name": "Witch Matic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Warlock Magic", "maxRank": 0}]}
+{"name": "Warlock Matic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Witch Magic", "maxRank": 0}]}
