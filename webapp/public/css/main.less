@@ -75,17 +75,49 @@ body {
             }
         }
 
+        .newCharacterView {
+            .characterDisplay {
+                display: inline-block;
+                width: 75%;
+            }
+
+            .templatesList {
+                display: inline-block;
+                width: 25%;
+            }
+        }
+
         .yui3-templatelistwidget {
             ul {
                 list-style: none;
 
-                .templateLabel {
-                    cursor: default;
+                .template {
                     color: #aaa;
+                    .templateLabel {
+                        cursor: pointer;
+                    }
+
+                    .gain, .lower {
+                        padding-right: 1em;
+                        cursor: default;
+                    }
                 }
 
                 .enabled {
                     .templateLabel {
+                        color: #000;
+                    }
+                }
+
+                .gainEnabled {
+                    .gain {
+                        color: #000;
+                        cursor: pointer;
+                    }
+                }
+
+                .loseEnabled {
+                    .lower {
                         color: #000;
                         cursor: pointer;
                     }

@@ -8,7 +8,9 @@ YUI.add("webmud-views-templatelist", function(Y) {
     ].join(""),
 
     _templateNodeTemplate = [
-        '<li>',
+        '<li class="template">',
+            '<span class="gain">+</span>',
+            '<span class="lower">-</span>',
             '<span class="templateLabel">{name}</span>',
         '</li>'
 
@@ -27,13 +29,33 @@ YUI.add("webmud-views-templatelist", function(Y) {
             bindUI: function() {
                 this.after("templatesChange", this._renderTemplates, this);
                 this.after("templateActionsChange", this._renderTemplates, this);
-                this._typeListNode.delegate("click", this._onTemplateClick, ".enabled .templateLabel", this);
+                this._typeListNode.delegate("click", this._onTemplateClick, ".templateLabel", this);
+                this._typeListNode.delegate("click", this._onTemplateGainClick, ".gainEnabled .gain", this);
+                this._typeListNode.delegate("click", this._onTemplateLowerClick, ".loseEnabled .lower", this);
             },
             _onTemplateClick: function(e) {
                 var target = e.currentTarget,
-                    name = target.get("text");
+                    templateNode = target.ancestor(".template"),
+                    template = templateNode.getData("template"),
+                    name = template.name;
 
                 Y.log("Clicked on " + name);
+            },
+            _onTemplateGainClick: function(e) {
+                var target = e.currentTarget,
+                    templateNode = target.ancestor(".template"),
+                    template = templateNode.getData("template"),
+                    name = template.name;
+
+                Y.log("Raising " + name);
+            },
+            _onTemplateLowerClick: function(e) {
+                var target = e.currentTarget,
+                    templateNode = target.ancestor(".template"),
+                    template = templateNode.getData("template"),
+                    name = template.name;
+
+                Y.log("Lowering " + name);
             },
             _renderTemplates: function() {
                 var templates = this.get("templates"),
@@ -55,18 +77,25 @@ YUI.add("webmud-views-templatelist", function(Y) {
                             templateTypeNodes[v.type] = templatesNode;
                         }
                         var templateNode = Y.Node.create(Y.substitute(_templateNodeTemplate, v));
+                        templateNode.setData("template", v);
                         templateTypeNodes[v.type].append(templateNode);
                         templateNodes[v.name] = templateNode;
 
                         var canGain = false, canLose = false;
                         if (templateActions[v.name]) {
                             canGain = templateActions[v.name].canGain;
-                            canLose = templateActions[v.name].canLose;
+                            canLose = templateActions[v.name].canLower;
                         }
 
                         if (canGain || canLose) {
                             // Can gain or lose levels in this, so "enable" it
                             templateNode.addClass("enabled");
+                            if (canGain) {
+                                templateNode.addClass("gainEnabled");
+                            }
+                            if (canLose) {
+                                templateNode.addClass("loseEnabled");
+                            }
                         }
                     }
                 }, this);
