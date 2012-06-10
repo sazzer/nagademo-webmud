@@ -15,17 +15,41 @@ YUI.add("webmud-views-newcharacter", function(Y) {
                     '</div>',
                 '</div>'
             ].join(""),
+            initializer: function() {
+                Y.fire("user:get", {
+                    context: this,
+                    callback: this._onGetUser
+                    });
+            },
+            /**
+             * when we get the callback with the user, if we haven't already got a character then create it
+             * @param user the user
+             */
+            _onGetUser: function(user) {
+                var character = this.get("character");
+
+                character.set("user", user);
+            },
             /**
              * Actually render the view, creating all the various sub-panels
              */
             render: function() {
                 var container = this.get("container"),
+                    character = this.get("character"),
+                    characterSheetNode = container.one(".characterDisplay"),
                     templateListNode = container.one(".templatesList");
 
+                var characterSheet = new Y.WebMud.Views.Characters.CharacterSheetWidget({
+                    character: character,
+                    render: characterSheetNode
+                });
+
                 var templateList = new Y.WebMud.Views.Characters.TemplateListWidget({
+                    character: character,
                     render: templateListNode
                 });
 
+                this.set("characterSheet", characterSheet);
                 this.set("templateList", templateList);
 
                 Y.fire("socket:call", {
@@ -38,6 +62,7 @@ YUI.add("webmud-views-newcharacter", function(Y) {
                         }
                         else {
                             Y.log("Received templates");
+                            characterSheet.set("templates", reply.templates);
                             templateList.set("templates", reply.templates);
                         }
                     }
@@ -52,6 +77,7 @@ YUI.add("webmud-views-newcharacter", function(Y) {
                             Y.log("Error getting available templates: " + reply.error);
                         }
                         else {
+                            characterSheet.set("templateActions", reply.templates);
                             templateList.set("templateActions", reply.templates);
                         }
                     }
@@ -59,13 +85,19 @@ YUI.add("webmud-views-newcharacter", function(Y) {
             },
         }, {
             ATTRS: {
+                character: {
+                    value: new Y.WebMud.Character.Character()
+                },
+                characterSheet: {},
                 templateList: {}
             }
         });
 }, "0.0.1", {
     requires: [
         "view",
-        "webmud-views-templatelist"
+        "webmud-character",
+        "webmud-views-templatelist",
+        "webmud-views-charactersheet"
     ]
 });
 

@@ -19,10 +19,14 @@ YUI.add("webmud-character", function(Y) {
                 gender: {},
                 /** When the character was created */
                 created: {
+                    value: new Date(),
                     writeOnce: true
                 },
                 /** When the character was last used */
                 lastused: {
+                    writeOnce: true
+                },
+                age: {
                     writeOnce: true
                 }
             }

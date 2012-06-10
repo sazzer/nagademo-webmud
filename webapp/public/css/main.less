@@ -77,13 +77,54 @@ body {
 
         .newCharacterView {
             .characterDisplay {
+                vertical-align: top;
                 display: inline-block;
                 width: 75%;
             }
 
             .templatesList {
+                vertical-align: top;
                 display: inline-block;
                 width: 25%;
+            }
+        }
+
+        .yui3-charactersheetwidget {
+            padding: 1em;
+
+            .readOnly {
+                .editMode {
+                    display: none;
+                }
+            }
+
+            .edit {
+                .readOnlyMode {
+                    display: none;
+                }
+            }
+
+            label {
+                input {
+                    border: 0;
+                    width: 100%;
+                }
+                display: inline-block;
+                padding-right: 1em;
+
+                div {
+                    border-bottom: 1px solid black;
+                }
+
+                .field {
+                    line-height: 1em;
+                }
+            }
+
+            .yui3-charactersheetwidget-coreDetails {
+                label {
+                    width: 15%;
+                }
             }
         }
 

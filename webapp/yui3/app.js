@@ -32,6 +32,15 @@ YUI.add("webmud-app", function(Y) {
                 user.after("destroy", function() {
                     location.reload(true);
                 });
+
+                // Event to get the current user
+                Y.publish("user:get", {
+                    emitFacade: true,
+                    broadcast: 2 // 2 means to broadcast globally
+                    });
+                Y.on("user:get", function(e) {
+                    e.callback.call(e.context, user);
+                }, this);
             },
             /**
              * Event handler for when the app is ready to start
