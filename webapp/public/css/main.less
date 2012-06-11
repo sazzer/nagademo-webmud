@@ -76,6 +76,7 @@ body {
         }
 
         .newCharacterView {
+            padding: 1em;
             .characterDisplay {
                 vertical-align: top;
                 display: inline-block;
@@ -89,9 +90,8 @@ body {
             }
         }
 
-        .yui3-charactersheetwidget {
-            padding: 1em;
 
+        .yui3-charactersheetwidget {
             .readOnly {
                 .editMode {
                     display: none;
@@ -112,8 +112,8 @@ body {
                 select {
                     width: 100%;
                 }
-                display: inline-block;
-                padding-right: 1em;
+                display: block;
+                padding-bottom: 0.5em;
 
                 div {
                     border-bottom: 1px solid black;
@@ -122,26 +122,42 @@ body {
                 .field {
                     line-height: 1em;
                 }
+
+                span.label {
+                    color: #999;
+                    font-style: italic;
+                    font-size: 0.8em;
+                }
             }
 
-            .yui3-charactersheetwidget-coreDetails {
-                label {
-                    width: 15%;
-                }
+            .yui3-charactersheetwidget-coreDetails,
+            .yui3-charactersheetwidget-charStats,
+            .yui3-charactersheetwidget-charImage {
+                vertical-align: top;
+                display: inline-block;
+                width: 25%;
+            }
+
+            .yui3-charactersheetwidget-charImage {
+                width: 50%;
             }
         }
 
         .yui3-templatelistwidget {
+            ul.yui3-templatelistwidget-typeList {
+                margin-top: 0;
+            }
+
             ul {
                 list-style: none;
 
-                .template {
+                .yui3-templateentrywidget-template {
                     color: #aaa;
                     .templateLabel {
                         cursor: pointer;
                     }
 
-                    .gain, .lower {
+                    .yui3-templateentrywidget-gain, .yui3-templateentrywidget-lower {
                         padding-right: 1em;
                         cursor: default;
                     }
@@ -154,14 +170,14 @@ body {
                 }
 
                 .gainEnabled {
-                    .gain {
+                    .yui3-templateentrywidget-gain {
                         color: #000;
                         cursor: pointer;
                     }
                 }
 
                 .loseEnabled {
-                    .lower {
+                    .yui3-templateentrywidget-lower {
                         color: #000;
                         cursor: pointer;
                     }

@@ -7,7 +7,9 @@ YUI.add("webmud-views-charactersheet", function(Y) {
         [Y.MakeNode],
         {
             initializer: function() {
-                this.after("characterChanged", this._afterSetCharacter, this);
+                this.after("characterChange", this._afterSetCharacter, this);
+                this.after("templatesChange", this._afterSetTemplates, this);
+                this.after("templateActionsChange", this._afterSetTemplateActions, this);
             },
             renderUI: function() {
                 this.get("contentBox").append(this._makeNode());
@@ -18,10 +20,30 @@ YUI.add("webmud-views-charactersheet", function(Y) {
                     character: this.get("character")
                 });
 
+                var charStats = new Y.WebMud.Views.Characters.TemplateListWidget({
+                    render: this._charStatsNode,
+                    character: this.get("character"),
+                    templates: this.get("templates"),
+                    templateActions: this.get("templateActions"),
+                    specialTemplateTypes: [this.get("statsTemplateType")],
+                    hideSpecials: false
+                });
+
+                this.set("charStatsWidget", charStats);
             },
             syncUI: function() {
             },
             bindUI: function() {
+            },
+            _afterSetTemplates: function(e) {
+                var templates = e.newVal;
+
+                this.get("charStatsWidget").set("templates", templates);
+            },
+            _afterSetTemplateActions: function(e) {
+                var templateActions = e.newVal;
+
+                this.get("charStatsWidget").set("templateActions", templateActions);
             },
             /**
              * Handler for when the character changes to keep the newCharacter and editCharacter
@@ -46,12 +68,15 @@ YUI.add("webmud-views-charactersheet", function(Y) {
                 '<div class="edit">',
                     '<div class="{c coreDetails}">',
                     '</div>',
+                    '<div class="{c charImage}">',
+                    '</div>',
                     '<div class="{c charStats}">',
                     '</div>',
                 '</div>'
             ].join(""),
             _CLASS_NAMES: [
                 "coreDetails",
+                "charImage",
                 "charStats"
             ],
             _EVENTS: {
@@ -77,6 +102,8 @@ YUI.add("webmud-views-charactersheet", function(Y) {
                 },
                 editCharacter: {
                     value: false
+                },
+                charStatsWidget: {
                 }
             }
         });
@@ -84,7 +111,8 @@ YUI.add("webmud-views-charactersheet", function(Y) {
     requires: [
         "widget",
         "dump",
-        "webmud-views-charactercoredetails"
+        "webmud-views-charactercoredetails",
+        "webmud-views-templatelist"
     ]
 });
 
