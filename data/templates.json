@@ -15,5 +15,5 @@
 {"name": "Half-Daemon", "type": "Race", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
 
 {"name": "Spellcasting", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"type": "Race", "maxAllowed": 0}]}
-{"name": "Witch Matic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Warlock Magic", "maxRank": 0}]}
-{"name": "Warlock Matic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Witch Magic", "maxRank": 0}]}
+{"name": "Witch Magic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Warlock Magic", "maxRank": 0}]}
+{"name": "Warlock Magic", "type": "Magic", "created": { "$date" : 1339237227308 }, "updated": { "$date" : 1339237227308 }, "restrictions": [{"template": "Spellcasting", "minRank": 1}, {"template": "Witch Magic", "maxRank": 0}]}

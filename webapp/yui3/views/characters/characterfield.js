@@ -17,10 +17,34 @@ YUI.add("webmud-views-characterfield", function(Y) {
                 contentBox.append(this._makeNode());
                 this._locateNodes();
 
+                // We change things about now
                 if (this.get("alwaysReadOnly")) {
-                    // We change things about now
-                    contentBox.one(".editMode").remove().destroy();
                     contentBox.one(".readOnlyMode").removeClass("readOnlyMode");
+                }
+                else {
+                    var values = this.get("values");
+                    if (Y.Lang.isArray(values)) {
+                        var vals = {};
+                        Y.each(values, function(v) {
+                            vals[v] = v;
+                        });
+                        values = vals;
+                    }
+
+                    if (Y.Lang.isObject(values)) {
+                        var editNode = Y.Node.create(Y.WebMud.Views.Characters.CharacterFieldWidget._MULTIPLE_EDIT_FIELD);
+                        var selectNode = editNode.one("select");
+                        Y.each(values, function(v, k) {
+                            var option = Y.Node.create("<option></option>");
+                            option.append(v);
+                            option.setAttribute("value", k);
+                            selectNode.append(option);
+                        });
+                        contentBox.prepend(editNode);
+                    }
+                    else {
+                        contentBox.prepend(Y.WebMud.Views.Characters.CharacterFieldWidget._SIMPLE_EDIT_FIELD);
+                    }
                 }
             },
             syncUI: function() {
@@ -75,9 +99,10 @@ YUI.add("webmud-views-characterfield", function(Y) {
         }, {
             _TEMPLATE: [
                 '<div class="readOnlyMode"><span class="field"></span></div>',
-                '<div class="editMode"><input type="text" class="field" /></div>',
                 '<span class="label">{s label}</span>',
             ].join(""),
+            _SIMPLE_EDIT_FIELD: '<div class="editMode"><input type="text" class="field" /></div>',
+            _MULTIPLE_EDIT_FIELD: '<div class="editMode"><select class="field"><option>Select</option></select></div>',
             _CLASS_NAMES: [
             ],
             _EVENTS: {
@@ -85,6 +110,10 @@ YUI.add("webmud-views-characterfield", function(Y) {
             ATTRS: {
                 character: {
                     value: null
+                },
+                values: {
+                    value: null,
+                    writeOnce: true
                 },
                 defaultValue: {
                     value: "",
