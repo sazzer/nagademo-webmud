@@ -13,57 +13,11 @@ YUI.add("webmud-views-charactersheet", function(Y) {
                 this.get("contentBox").append(this._makeNode());
                 this._locateNodes();
 
-                var charName = new Y.WebMud.Views.Characters.CharacterFieldWidget({
+                var coreDetails = new Y.WebMud.Views.Characters.CharacterCoreDetailsWidget({
                     render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: false,
-                    strings: { label: "Name" },
-                    field: "name"
+                    character: this.get("character")
                 });
 
-                var gender = new Y.WebMud.Views.Characters.CharacterFieldWidget({
-                    render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: false,
-                    strings: { label: "Gender" },
-                    field: "gender",
-                    values: ["Male", "Female"]
-                });
-
-                var playerName = new Y.WebMud.Views.Characters.CharacterFieldWidget({
-                    render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: true,
-                    strings: { label: "Player" },
-                    field: "user.username"
-                });
-
-                var created = new Y.WebMud.Views.Characters.CharacterFieldWidget({
-                    render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: true,
-                    strings: { label: "Created" },
-                    field: "created",
-                    defaultValue: new Date()
-                });
-
-                var lastPlayed = new Y.WebMud.Views.Characters.CharacterFieldWidget({
-                    render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: true,
-                    strings: { label: "Last Played" },
-                    field: "lastused",
-                    defaultValue: "Never"
-                });
-
-                var age = new Y.WebMud.Views.Characters.CharacterFieldWidget({
-                    render: this._coreDetailsNode,
-                    character: this.get("character"),
-                    alwaysReadOnly: true,
-                    strings: { label: "Age" },
-                    field: "age",
-                    defaultValue: "New"
-                });
             },
             syncUI: function() {
             },
@@ -91,29 +45,6 @@ YUI.add("webmud-views-charactersheet", function(Y) {
             _TEMPLATE: [
                 '<div class="edit">',
                     '<div class="{c coreDetails}">',
-                    /*
-                        '<label class="characterName">',
-                            '<div class="readOnlyMode"><span class="field {c charName}"></span></div>',
-                            '<div class="editMode"><input type="text" class="{c charName}" /></div>',
-                            '<span class="label">Name</span>',
-                        '</label>',
-                        '<label class="playerName">',
-                            '<div><span class="field {c playerName}"></span></div>',
-                            '<span class="label">Player</span>',
-                        '</label>',
-                        '<label class="created">',
-                            '<div><span class="field {c created}">&nbsp;</span></div>',
-                            '<span class="label">Created</span>',
-                        '</label>',
-                        '<label class="lastPlayed">',
-                            '<div><span class="field {c lastPlayed}"></span></div>',
-                            '<span class="label">Last Played</span>',
-                        '</label>',
-                        '<label class="age">',
-                            '<div><span class="field {c age}"></span></div>',
-                            '<span class="label">Age</span>',
-                        '</label>',
-                        */
                     '</div>',
                     '<div class="{c charStats}">',
                     '</div>',
@@ -153,7 +84,7 @@ YUI.add("webmud-views-charactersheet", function(Y) {
     requires: [
         "widget",
         "dump",
-        "webmud-views-characterfield"
+        "webmud-views-charactercoredetails"
     ]
 });
 
