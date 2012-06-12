@@ -39,8 +39,7 @@ app.configure('production', function(){
 // Set up all of the Socket.IO controllers to use
 var controllers = [
     "users",
-    "characters",
-    "templates"
+    "terminal"
 ].map(function(v) {
     var controller = require("./lib/controllers/" + v);
     winston.debug("Loaded controller " + v + ", " + util.inspect(controller));
@@ -52,6 +51,19 @@ var controllers = [
 
 datastore.connect(mongoCredentials);
 
+function buildHandlerWrapper(socket, handler, handlerId) {
+    var handlerWrapper = function(data, callback) {
+        winston.debug("Received message: " + handlerId + " with data: " + data);
+        handler({
+            id: handlerId,
+            socket: socket,
+            data: data,
+            callback: callback
+        });
+    }
+    return handlerWrapper;
+}
+
 // When we get a new Socket.IO connection, register all the controllers with it
 io.sockets.on("connection", function(socket) {
     controllers.forEach(function(c) {
@@ -61,7 +73,7 @@ io.sockets.on("connection", function(socket) {
                     handler = c.controller.handlers[key];
                 if (handler instanceof Function) {
                     winston.debug("Registering handler for: " + handlerId);
-                    socket.on(handlerId, handler);
+                    socket.on(handlerId, buildHandlerWrapper(socket, handler, handlerId));
                 }
                 else {
                     winston.error("Handler that wasn't a function found: " + handlerId + ", " + handler);
@@ -70,6 +82,7 @@ io.sockets.on("connection", function(socket) {
         }
     });
 });
+
 
 // And finally start the server
 app.listen(port, function() {

@@ -14,11 +14,8 @@ YUI.add("webmud-app", function(Y) {
                 "login": {
                     type: Y.WebMud.Views.LoginView
                 },
-                "characters": {
-                    type: Y.WebMud.Views.CharactersView
-                },
-                "newCharacter": {
-                    type: Y.WebMud.Views.NewCharacterView
+                "terminal": {
+                    type: Y.WebMud.Views.TerminalView
                 }
             },
             /**
@@ -71,18 +68,7 @@ YUI.add("webmud-app", function(Y) {
              * Handler for when the user is successfully loaded
              */
             _afterUserLoaded: function() {
-                var user = this.get("user"),
-                    characters = this.get("characters");
-
-                characters.set("user", user);
-                characters.load(Y.bind(function(err, response) {
-                    if (characters.isEmpty()) {
-                        this.showView("newCharacter");
-                    }
-                    else {
-                        this.showView("characters", {characters: characters});
-                    }
-                }, this));
+                this.showView("terminal");
             }
         }, {
             ATTRS: {
@@ -92,9 +78,6 @@ YUI.add("webmud-app", function(Y) {
                 user: {
                     value: new Y.WebMud.User()
                 },
-                characters: {
-                    value: new Y.WebMud.CharacterList()
-                },
                 currentUserArea: {}
             }
         });
@@ -103,10 +86,8 @@ YUI.add("webmud-app", function(Y) {
         "app",
         "webmud-socketio",
         "webmud-user",
-        "webmud-character-list",
         "webmud-views-login",
-        "webmud-views-characters",
-        "webmud-views-newcharacter",
-        "webmud-views-currentuser"
+        "webmud-views-currentuser",
+        "webmud-views-terminal"
     ]
 });

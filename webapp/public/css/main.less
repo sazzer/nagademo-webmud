@@ -75,120 +75,35 @@ body {
             }
         }
 
-        .newCharacterView {
-            padding: 1em;
-            .characterDisplay {
-                vertical-align: top;
+        .terminalView {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+
+            .output {
                 display: inline-block;
-                width: 75%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 2em;
+                right: 0;
+                vertical-align: bottom;
             }
 
-            .templatesList {
-                vertical-align: top;
-                display: inline-block;
-                width: 25%;
-            }
-        }
+            .input {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
 
-
-        .yui3-charactersheetwidget {
-            .readOnly {
-                .editMode {
-                    display: none;
-                }
-            }
-
-            .edit {
-                .readOnlyMode {
-                    display: none;
-                }
-            }
-
-            label {
                 input {
                     border: 0;
                     width: 100%;
                 }
-                select {
-                    width: 100%;
-                }
-                display: block;
-                padding-bottom: 0.5em;
-
-                div {
-                    border-bottom: 1px solid black;
-                }
-
-                .field {
-                    line-height: 1em;
-                }
-
-                span.label {
-                    color: #999;
-                    font-style: italic;
-                    font-size: 0.8em;
-                }
-            }
-
-            .yui3-charactersheetwidget-coreDetails,
-            .yui3-charactersheetwidget-charStats,
-            .yui3-charactersheetwidget-charImage {
-                vertical-align: top;
-                display: inline-block;
-                width: 25%;
-            }
-
-            .yui3-charactersheetwidget-charImage {
-                width: 50%;
             }
         }
 
-        .yui3-templatelistwidget {
-            ul.yui3-templatelistwidget-typeList {
-                margin-top: 0;
-            }
-
-            ul {
-                list-style: none;
-
-                .yui3-templateentrywidget-template {
-                    color: #aaa;
-                    .templateLabel {
-                        cursor: pointer;
-                    }
-
-                    .yui3-templateentrywidget-gain, .yui3-templateentrywidget-lower {
-                        padding-right: 1em;
-                        cursor: default;
-                    }
-                }
-
-                .enabled {
-                    .templateLabel {
-                        color: #000;
-                    }
-                }
-
-                .gainEnabled {
-                    .yui3-templateentrywidget-gain {
-                        color: #000;
-                        cursor: pointer;
-                    }
-                }
-
-                .loseEnabled {
-                    .yui3-templateentrywidget-lower {
-                        color: #000;
-                        cursor: pointer;
-                    }
-                }
-
-                .typeLabel {
-                    font-weight: bold;
-                    color: #000;
-                }
-            }
-        }
     }
 
     #footer {

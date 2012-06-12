@@ -68,6 +68,7 @@ YUI.add("webmud-views-currentuser", function(Y) {
         });
 }, "0.0.1", {
     requires: [
+        "base",
         "widget",
         "gallery-makenode"
     ]
