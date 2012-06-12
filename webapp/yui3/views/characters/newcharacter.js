@@ -9,6 +9,9 @@ YUI.add("webmud-views-newcharacter", function(Y) {
             /** The template used to render the view container */
             containerTemplate: [
                 '<div class="newCharacterView">',
+                    '<div class="actionBar">',
+                        '<button class="create">Create</button>',
+                    '</div>',
                     '<div class="characterDisplay">',
                     '</div>',
                     '<div class="templatesList">',
@@ -31,6 +34,12 @@ YUI.add("webmud-views-newcharacter", function(Y) {
                 character.set("user", user);
             },
             /**
+             * Attempt to create the character
+             */
+            _onCreateCharacter: function() {
+                Y.log("Creating character");
+            },
+            /**
              * Actually render the view, creating all the various sub-panels
              */
             render: function() {
@@ -48,6 +57,8 @@ YUI.add("webmud-views-newcharacter", function(Y) {
                     character: character,
                     render: templateListNode
                 });
+
+                container.one("button.create").on("click", this._onCreateCharacter, this);
 
                 this.set("characterSheet", characterSheet);
                 this.set("templateList", templateList);
