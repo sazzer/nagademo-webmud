@@ -51,12 +51,13 @@ var controllers = [
 
 datastore.connect(mongoCredentials);
 
-function buildHandlerWrapper(socket, handler, handlerId) {
+function buildHandlerWrapper(socket, session, handler, handlerId) {
     var handlerWrapper = function(data, callback) {
         winston.debug("Received message: " + handlerId + " with data: " + data);
         handler({
             id: handlerId,
             socket: socket,
+            session: session,
             data: data,
             callback: callback
         });
@@ -66,6 +67,8 @@ function buildHandlerWrapper(socket, handler, handlerId) {
 
 // When we get a new Socket.IO connection, register all the controllers with it
 io.sockets.on("connection", function(socket) {
+    var session = {};
+
     controllers.forEach(function(c) {
         if (c.controller.handlers) {
             for (var key in c.controller.handlers) {
@@ -73,7 +76,7 @@ io.sockets.on("connection", function(socket) {
                     handler = c.controller.handlers[key];
                 if (handler instanceof Function) {
                     winston.debug("Registering handler for: " + handlerId);
-                    socket.on(handlerId, buildHandlerWrapper(socket, handler, handlerId));
+                    socket.on(handlerId, buildHandlerWrapper(socket, session, handler, handlerId));
                 }
                 else {
                     winston.error("Handler that wasn't a function found: " + handlerId + ", " + handler);

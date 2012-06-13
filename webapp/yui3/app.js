@@ -68,7 +68,16 @@ YUI.add("webmud-app", function(Y) {
              * Handler for when the user is successfully loaded
              */
             _afterUserLoaded: function() {
-                this.showView("terminal");
+                var user = this.get("user");
+
+                Y.fire("socket:call", {
+                    message: "users:postSignin",
+                    data: user.get("id"),
+                    callback: function() {
+                        this.showView("terminal");
+                    },
+                    context: this
+                });
             }
         }, {
             ATTRS: {
