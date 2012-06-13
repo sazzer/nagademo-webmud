@@ -5,7 +5,7 @@
 var vows = require("vows"),
     assert = require("assert"),
     horaa = require("horaa"),
-    users = require("../../lib/users");
+    users = require("../lib/users");
 
 var datastore = horaa("../../../lib/datastore");
 
